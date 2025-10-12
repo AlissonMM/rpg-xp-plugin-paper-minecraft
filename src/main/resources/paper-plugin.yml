@@ -1,0 +1,4 @@
+name: rpg-xp-plugin
+version: '1.0-SNAPSHOT'
+main: me.futharkr.rpgXpPlugin.RpgXpPlugin
+api-version: '1.21'
