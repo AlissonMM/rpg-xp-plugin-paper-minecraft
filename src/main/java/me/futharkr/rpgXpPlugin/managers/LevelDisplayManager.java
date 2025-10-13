@@ -1,8 +1,9 @@
 package me.futharkr.rpgXpPlugin.managers;
 
 import me.futharkr.rpgXpPlugin.RpgXpPlugin;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -31,9 +32,19 @@ public class LevelDisplayManager {
         // Try to get the existing objective, or create it if it doesn't exist
         Objective objective = scoreboard.getObjective("playerLevel");
 
-        if (objective == null) {
-            objective = scoreboard.registerNewObjective("playerLevel", Criteria.DUMMY, Component.text("lvl"));
+        // Get the color from the config, default to WHITE if not found or invalid
+        FileConfiguration config = RpgXpPlugin.getInstance().getConfig();
+        String colorName = config.getString("scoreboard-color", "WHITE");
 
+        ChatColor color = ChatColor.WHITE;
+        try {
+            color = ChatColor.valueOf(colorName);
+        } catch (Exception ignored) {}
+
+        if (objective == null) {
+            objective = scoreboard.registerNewObjective("playerLevel", Criteria.DUMMY, color + "lvl");
+        } else {
+            objective.setDisplayName(color + "lvl");
         }
         // Set the display slot to below the player's name
         objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
