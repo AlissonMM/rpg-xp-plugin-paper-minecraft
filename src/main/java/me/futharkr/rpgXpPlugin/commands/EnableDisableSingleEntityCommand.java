@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public class EnableDisableCommands implements CommandExecutor {
+public class EnableDisableSingleEntityCommand implements CommandExecutor {
 
     private final LevelDisplayManager levelDisplayManager = new LevelDisplayManager();
 

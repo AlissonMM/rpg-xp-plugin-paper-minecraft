@@ -1,6 +1,6 @@
 package me.futharkr.rpgXpPlugin;
 
-import me.futharkr.rpgXpPlugin.commands.EnableDisableCommands;
+import me.futharkr.rpgXpPlugin.commands.EnableDisableSingleEntityCommand;
 import me.futharkr.rpgXpPlugin.listeners.XpListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,8 +19,8 @@ public final class RpgXpPlugin extends JavaPlugin {
 
 
         // When the command `/rpgxp` is executed in the game it will be handled by the class
-        // EnableDisableCommands
-        getCommand("rpgxp").setExecutor(new EnableDisableCommands());
+        // EnableDisableSingleEntityCommand
+        getCommand("rpgxp").setExecutor(new EnableDisableSingleEntityCommand());
 
         // register events is used to `tell bukkit` that there are classes
         // which want to listen to events in the game
