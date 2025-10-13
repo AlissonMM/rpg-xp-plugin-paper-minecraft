@@ -69,4 +69,17 @@ public class LevelDisplayManager {
             RpgXpPlugin.getInstance().getLogger().severe("[LevelDisplay] failed to set score for " + player.getName() + ": " + e.getMessage());
         }
     }
+
+    public void disableLevelDisplay(Player player) {
+        Scoreboard scoreboard = player.getScoreboard();
+
+        Objective objective = scoreboard.getObjective("playerLevel");
+
+        if (objective != null) {
+            objective.unregister();
+
+
+        }
+
+    }
 }
