@@ -26,7 +26,7 @@ public class EnableDisableSingleEntityCommand extends Command {
                              @NotNull String[] args) {
 
         if (args.length < 2){
-            commandSender.sendMessage("Correct usage: /rpgxp <enable|disable> <nickname|id>");
+            commandSender.sendMessage("Correct usage: /rpgxp-enabledisable <enable|disable> <nickname|id>");
             return true;
 
         }

@@ -28,7 +28,7 @@ public class ChangeColorDisplayCommand extends Command {
 
 
         if (args.length < 2){
-            commandSender.sendMessage("Correct usage: /rpgxp changecolor <color>");
+            commandSender.sendMessage("Correct usage: /rpgxp-changecolor changecolor <color>");
             return true;
         }
         String colorName = args[1].toUpperCase();
