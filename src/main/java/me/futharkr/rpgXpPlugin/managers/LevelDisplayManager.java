@@ -14,6 +14,13 @@ public class LevelDisplayManager {
 
     public void setupLevelDisplay(Player player) {
 
+        // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
+        boolean isCitizensNPC = player.hasMetadata("NPC");
+
+        if (isCitizensNPC) {
+            return;
+        }
+
         // Try to get the player's existing scoreboard, or create a new one if they don't have one
         Scoreboard scoreboard = player.getScoreboard();
 
@@ -42,12 +49,25 @@ public class LevelDisplayManager {
     }
 
     public void updateLevelDisplay(Player player) {
+        boolean isCitizensNPC = player.hasMetadata("NPC");
+
+        if (isCitizensNPC) {
+            return;
+        }
+
         updateLevelDisplay(player, player.getLevel());
     }
 
     //Don't know if this will continuo, maybe this should be deleted
     // and only the updateLevelDisplay(Player) should be used
     public void updateLevelDisplay(Player player, int level) {
+
+        boolean isCitizensNPC = player.hasMetadata("NPC");
+
+        if (isCitizensNPC) {
+            return;
+        }
+
         Scoreboard scoreboard = player.getScoreboard();
 
         Objective objective = scoreboard.getObjective("playerLevel");
