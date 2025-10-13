@@ -2,13 +2,3 @@ name: RpgXpPlugin
 version: '1.0-SNAPSHOT'
 main: me.futharkr.rpgXpPlugin.RpgXpPlugin
 api-version: '1.21'
-
-commands:
-  enabledisable:
-    description: enables or disables xp display for players/entities
-    usage: /rpgxp <enable|disable> <nickname|id>
-    permission: rpgxp.admin
-  changecolor:
-    description: changes the color of rpgxp display
-    usage: /rpgxp changecolor <color>
-    permission: rpgxp.admin

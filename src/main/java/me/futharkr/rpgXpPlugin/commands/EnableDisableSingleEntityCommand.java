@@ -9,13 +9,19 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
-public class EnableDisableSingleEntityCommand implements CommandExecutor {
+public class EnableDisableSingleEntityCommand extends Command {
 
     private final LevelDisplayManager levelDisplayManager = new LevelDisplayManager();
 
+    public EnableDisableSingleEntityCommand() {
+        super("rpgxp-enabledisable");
+        this.setDescription("enables or disables xp display for players");
+        this.setUsage("/rpgxp-enabledisable <enable|disable> <nickname|id>");
+        this.setPermission("rpgxp.admin");
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender,
-                             @NotNull Command command,
+    public boolean execute(@NotNull CommandSender commandSender,
                              @NotNull String label,
                              @NotNull String[] args) {
 

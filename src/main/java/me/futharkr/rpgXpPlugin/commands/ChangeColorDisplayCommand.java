@@ -12,11 +12,17 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-public class ChangeColorDisplayCommand implements CommandExecutor {
+public class ChangeColorDisplayCommand extends Command {
+
+    public ChangeColorDisplayCommand() {
+        super("rpgxp-changecolor");
+        this.setDescription("Changes the color of the xp display");
+        this.setUsage("/rpgxp-changecolor changecolor <color>");
+        this.setPermission("rpgxp.admin");
+    }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender,
-                             @NotNull Command command,
+    public boolean execute(@NotNull CommandSender commandSender,
                              @NotNull String label,
                              @NotNull String[] args) {
 
