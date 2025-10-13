@@ -1,8 +1,8 @@
 # 🧙‍♂️ RPG XP Plugin
 
-A lightweight Minecraft plugin that displays players' XP levels dynamically above their heads and provides simple admin controls to enable, disable, or change the color of the XP display.
+A lightweight Minecraft plugin that displays players' XP levels dynamically bellow their heads and provides simple admin controls to enable, disable, or change the color of the XP display.
 
-Um plugin leve para Minecraft que exibe o nível de XP dos jogadores acima de suas cabeças, com comandos administrativos simples para ativar, desativar ou mudar a cor da exibição.
+Um plugin leve para Minecraft que exibe o nível de XP dos jogadores abaixo de suas cabeças, com comandos administrativos simples para ativar, desativar ou mudar a cor da exibição.
 
 ---
 
