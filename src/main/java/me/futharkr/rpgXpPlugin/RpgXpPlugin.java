@@ -17,7 +17,7 @@ public final class RpgXpPlugin extends JavaPlugin {
         getLogger().info("RPG XP Plugin has been enabled!");
 
         // register events is used to `tell bukkit` that there are classes
-        //which want to listen to events in the game
+        // which want to listen to events in the game
         getServer().getPluginManager().registerEvents(new XpListener(), this);
 
     }

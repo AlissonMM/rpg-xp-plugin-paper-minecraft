@@ -14,24 +14,25 @@ public class LevelDisplayManager {
 
     public void setupLevelDisplay(Player player) {
 
-        // Reuse the player's existing scoreboard to avoid overwriting other plugins' scoreboards
+        // Try to get the player's existing scoreboard, or create a new one if they don't have one
         Scoreboard scoreboard = player.getScoreboard();
 
         if (scoreboard == null) {
             scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         }
 
+        // Try to get the existing objective, or create it if it doesn't exist
         Objective objective = scoreboard.getObjective("playerLevel");
 
         if (objective == null) {
             objective = scoreboard.registerNewObjective("playerLevel", Criteria.DUMMY, Component.text("lvl"));
-            objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+
         }
-        // ensure display slot is correct
+        // Set the display slot to below the player's name
         objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
 
 
-        // If the player's scoreboard was empty/new, assign it. If another plugin manages it, avoid forcing replacement.
+        // Assign the scoreboard to the player if they don't already have it
         if (player.getScoreboard() != scoreboard) {
             player.setScoreboard(scoreboard);
         }
@@ -44,6 +45,8 @@ public class LevelDisplayManager {
         updateLevelDisplay(player, player.getLevel());
     }
 
+    //Don't know if this will continuo, maybe this should be deleted
+    // and only the updateLevelDisplay(Player) should be used
     public void updateLevelDisplay(Player player, int level) {
         Scoreboard scoreboard = player.getScoreboard();
 
