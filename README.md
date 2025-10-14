@@ -82,7 +82,6 @@ lp user <playername> permission set rpgxp.admin true
 **TKCraft** — A Brazilian RPG server inspired by Tolkien’s *The Silmarillion*  
 **TKCraft** — Um servidor brasileiro de RPG inspirado em *O Silmarillion*, de Tolkien  
 
----
 
 ## ⚒️ Framework  
 **PaperMC**
