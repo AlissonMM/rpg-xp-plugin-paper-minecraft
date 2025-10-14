@@ -6,7 +6,7 @@ Um plugin leve para Minecraft que exibe o nível de XP dos jogadores abaixo de s
 
 
 
-## 🌍 Overview / Visão Geral
+## 🥸 Overview / Visão Geral
 
 This plugin was created to make RPG-style Minecraft servers more immersive.  
 Born from a need within the **TKCraft** server — a Brazilian Minecraft world that seeks to recreate the **First Age** from the tales of **J.R.R. Tolkien**, inspired by *The Silmarillion* — this plugin brings a touch of lore and realism to every player.  
