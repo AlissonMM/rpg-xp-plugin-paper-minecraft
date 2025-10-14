@@ -4,7 +4,7 @@ A lightweight Minecraft plugin that displays players' XP levels dynamically belo
 
 Um plugin leve para Minecraft que exibe o nível de XP dos jogadores abaixo de suas cabeças, com comandos administrativos simples para ativar, desativar ou mudar a cor da exibição.
 
----
+
 
 ## 🌍 Overview / Visão Geral
 
@@ -16,7 +16,7 @@ Este plugin foi criado para tornar servidores de Minecraft com estilo RPG mais i
 Ele nasceu da necessidade do servidor **TKCraft**, um servidor brasileiro de Minecraft que busca recriar a **Primeira Era** dos contos de **J.R.R. Tolkien**, inspirada no livro *O Silmarillion*.  
 O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os administradores podem facilmente ativar, desativar ou personalizar essa exibição através de comandos simples e diretos.
 
----
+
 
 ## ⚙️ Installation / Instalação
 
@@ -28,7 +28,7 @@ O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os 
 2. Reinicie ou recarregue o servidor.  
 3. Você verá `[RPG XP Plugin has been enabled!]` no console.
 
----
+
 
 ## 🧾 Commands / Comandos
 
@@ -40,7 +40,7 @@ O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os 
 
 > 💡 **Tip / Dica:** Valid color names are the same as [Minecraft Chat Colors](https://minecraft.wiki/w/Formatting_codes).
 
----
+
 
 ## 🔒 Permissions / Permissões
 
@@ -48,7 +48,7 @@ O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os 
 |-------------|------------------|--------------------|
 | `rpgxp.admin` | Allows a player to use all `/rpgxp` admin commands | Permite ao jogador usar todos os comandos administrativos `/rpgxp` |
 
----
+
 
 ## 🧰 Granting Permissions / Dando Permissões
 
@@ -60,14 +60,13 @@ Se você usa **LuckPerms**, execute este comando no console ou no jogo (como ope
 lp user <playername> permission set rpgxp.admin true
 ```
 
----
 
-# ✨ Credits / Créditos
+
 
 ## 💻 Developer / Desenvolvedor  
 **Futharkr (Alisson Mayer Medeji)**  
 
----
+
 
 ## 🌐 Server Inspiration  
 **TKCraft** — A Brazilian RPG server inspired by Tolkien’s *The Silmarillion*  
