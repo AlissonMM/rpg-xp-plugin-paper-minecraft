@@ -16,17 +16,27 @@ Este plugin foi criado para tornar servidores de Minecraft com estilo RPG mais i
 Ele nasceu da necessidade do servidor **TKCraft**, um servidor brasileiro de Minecraft que busca recriar a **Primeira Era** dos contos de **J.R.R. Tolkien**, inspirada no livro *O Silmarillion*.  
 O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os administradores podem facilmente ativar, desativar ou personalizar essa exibição através de comandos simples e diretos.
 
+## ⚙️ Requirements / Requisitos
+
+| Component | Version | Description |
+|------------|----------|-------------|
+| **Minecraft** | 1.21.4 | Compatible with PaperMC 1.21.4 |
+| **PaperMC** | 1.21.4 | Plugin framework |
+| **Java** | 21 | Required runtime |
+
 
 
 ## ⚙️ Installation / Instalação
 
-1. Download the plugin `.jar` file and place it inside your server’s `plugins/` folder.  
-2. Restart or reload your Minecraft server.  
-3. You should see `[RPG XP Plugin has been enabled!]` in the console.
+1. Use the command mvn clean package to generate the .jar file
+2. Download the plugin `.jar` file and place it inside your server’s `plugins/` folder.  
+3. Restart or reload your Minecraft server.  
+4. You should see `[RPG XP Plugin has been enabled!]` in the console.
 
-1. Baixe o arquivo `.jar` do plugin e coloque na pasta `plugins/` do seu servidor.  
-2. Reinicie ou recarregue o servidor.  
-3. Você verá `[RPG XP Plugin has been enabled!]` no console.
+1. Rode o comando mvn clean package para gerar o .jar
+2. Baixe o arquivo `.jar` do plugin e coloque na pasta `plugins/` do seu servidor.  
+3. Reinicie ou recarregue o servidor.  
+4. Você verá `[RPG XP Plugin has been enabled!]` no console.
 
 
 
