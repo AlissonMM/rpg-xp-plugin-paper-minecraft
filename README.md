@@ -8,11 +8,13 @@ Um plugin leve para Minecraft que exibe o nível de XP dos jogadores abaixo de s
 
 ## 🌍 Overview / Visão Geral
 
-This plugin was created to make RPG-style servers more immersive.  
-Each player’s XP level is shown above their character, and administrators can easily toggle or customize it via commands.
+This plugin was created to make RPG-style Minecraft servers more immersive.
+Born from a need within the TKCraft server — a Brazilian Minecraft world that seeks to recreate the First Age from the tales of J.R.R. Tolkien, inspired by The Silmarillion — this plugin brings a touch of lore and realism to every player.
+Each player’s XP level is displayed below their nickname, allowing administrators to easily enable, disable, or customize the display through intuitive commands.
 
-Este plugin foi criado para tornar servidores com estilo RPG mais imersivos.  
-O nível de XP de cada jogador é exibido acima do personagem, e administradores podem ativar, desativar ou personalizar via comandos.
+Este plugin foi criado para tornar servidores de Minecraft com estilo RPG mais imersivos.
+Ele nasceu da necessidade do servidor TKCraft, um servidor brasileiro de Minecraft que busca recriar a Primeira Era dos contos de J.R.R. Tolkien, inspirada no livro O Silmarillion.
+O nível de XP de cada jogador é exibido abaixo do apelido do personagem, e os administradores podem facilmente ativar, desativar ou personalizar essa exibição através de comandos simples e diretos.
 
 ---
 
@@ -56,3 +58,21 @@ Se você usa **LuckPerms**, execute este comando no console ou no jogo (como ope
 
 ```bash
 lp user <playername> permission set rpgxp.admin true
+
+# ✨ Credits / Créditos
+
+---
+
+## 💻 Developer / Desenvolvedor  
+**Futharkr (Alisson Mayer Medeji)**  
+
+---
+
+## 🌐 Server Inspiration  
+**TKCraft** — A Brazilian RPG server inspired by Tolkien’s *The Silmarillion*  
+**TKCraft** — Um servidor brasileiro de RPG inspirado em *O Silmarillion*, de Tolkien  
+
+---
+
+## ⚒️ Framework  
+**PaperMC**
