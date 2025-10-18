@@ -16,7 +16,23 @@ public class LevelDisplayManager {
     public void setupLevelDisplay(Player player) {
 
         // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
-        if (isCitizensNPC(player)) return;
+        boolean isCitizensNPC = player.hasMetadata("NPC");
+
+        if (isCitizensNPC) {
+            return;
+        }
+
+        // If the player's level is less than 1, remove the objective and return
+        if (player.getLevel() < 1) {
+            Scoreboard scoreboard = player.getScoreboard();
+            if (scoreboard != null) {
+                Objective objective = scoreboard.getObjective("playerLevel");
+                if (objective != null) {
+                    objective.unregister();
+                }
+                return;
+            }
+        }
 
         // Try to get the player's existing scoreboard, or create a new one if they don't have one
         Scoreboard scoreboard = player.getScoreboard();
@@ -56,13 +72,16 @@ public class LevelDisplayManager {
     }
 
     public void updateLevelDisplay(Player player) {
+        boolean isCitizensNPC = player.hasMetadata("NPC");
 
-        if (isCitizensNPC(player)) return;
+        if (isCitizensNPC) {
+            return;
+        }
 
         updateLevelDisplay(player, player.getLevel());
     }
 
-    //Don't know if this will continuo, maybe this should be deleted
+    //Don't know if this will continue, maybe this should be deleted
     // and only the updateLevelDisplay(Player) should be used
     public void updateLevelDisplay(Player player, int level) {
 
@@ -106,27 +125,4 @@ public class LevelDisplayManager {
         }
 
     }
-
-    // Helper to detect if a Player is a Citizens NPC without statically depending on Citizens API
-    private boolean isCitizensNPC(Player player) {
-        // Metadata check first (Citizens usually sets this)
-        if (player.hasMetadata("NPC")) return true;
-
-        if (!Bukkit.getPluginManager().isPluginEnabled("Citizens")) return false;
-
-        try {
-            // Use reflection to avoid NoClassDefFoundError when Citizens API is absent
-            Class<?> citizensApi = Class.forName("net.citizensnpcs.api.CitizensAPI");
-            java.lang.reflect.Method getNPCRegistry = citizensApi.getMethod("getNPCRegistry");
-            Object registry = getNPCRegistry.invoke(null);
-            java.lang.reflect.Method isNPC = registry.getClass().getMethod("isNPC", org.bukkit.entity.Entity.class);
-            return (boolean) isNPC.invoke(registry, player);
-        } catch (ClassNotFoundException e) {
-            return false;
-        } catch (Throwable t) {
-            RpgXpPlugin.getInstance().getLogger().warning("[LevelDisplay] failed to check Citizens API: " + t.getMessage());
-            return false;
-        }
-    }
-
 }

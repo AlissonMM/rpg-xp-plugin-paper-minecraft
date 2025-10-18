@@ -2,6 +2,6 @@ name: RpgXpPlugin
 version: '1.0-SNAPSHOT'
 main: me.futharkr.rpgXpPlugin.RpgXpPlugin
 api-version: '1.21'
-
-softdepend:
-  - Citizens
+#
+#softdepend:
+#  - Citizens
