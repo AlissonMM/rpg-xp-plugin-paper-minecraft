@@ -1,7 +1,6 @@
 package me.futharkr.rpgXpPlugin.managers;
 
 import me.futharkr.rpgXpPlugin.RpgXpPlugin;
-import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,17 +16,7 @@ public class LevelDisplayManager {
     public void setupLevelDisplay(Player player) {
 
         // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
-//        boolean isCitizensNPC = player.hasMetadata("NPC");
-//
-//        if (isCitizensNPC) {
-//            return;
-//        }
-
-        if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
-            if (CitizensAPI.getNPCRegistry().isNPC(player)) {
-                return;
-            }
-        }
+        if (isCitizensNPC(player)) return;
 
         // Try to get the player's existing scoreboard, or create a new one if they don't have one
         Scoreboard scoreboard = player.getScoreboard();
@@ -67,17 +56,8 @@ public class LevelDisplayManager {
     }
 
     public void updateLevelDisplay(Player player) {
-//        boolean isCitizensNPC = player.hasMetadata("NPC");
-//
-//        if (isCitizensNPC) {
-//            return;
-//        }
 
-        if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
-            if (CitizensAPI.getNPCRegistry().isNPC(player)) {
-                return;
-            }
-        }
+        if (isCitizensNPC(player)) return;
 
         updateLevelDisplay(player, player.getLevel());
     }
@@ -126,4 +106,27 @@ public class LevelDisplayManager {
         }
 
     }
+
+    // Helper to detect if a Player is a Citizens NPC without statically depending on Citizens API
+    private boolean isCitizensNPC(Player player) {
+        // Metadata check first (Citizens usually sets this)
+        if (player.hasMetadata("NPC")) return true;
+
+        if (!Bukkit.getPluginManager().isPluginEnabled("Citizens")) return false;
+
+        try {
+            // Use reflection to avoid NoClassDefFoundError when Citizens API is absent
+            Class<?> citizensApi = Class.forName("net.citizensnpcs.api.CitizensAPI");
+            java.lang.reflect.Method getNPCRegistry = citizensApi.getMethod("getNPCRegistry");
+            Object registry = getNPCRegistry.invoke(null);
+            java.lang.reflect.Method isNPC = registry.getClass().getMethod("isNPC", org.bukkit.entity.Entity.class);
+            return (boolean) isNPC.invoke(registry, player);
+        } catch (ClassNotFoundException e) {
+            return false;
+        } catch (Throwable t) {
+            RpgXpPlugin.getInstance().getLogger().warning("[LevelDisplay] failed to check Citizens API: " + t.getMessage());
+            return false;
+        }
+    }
+
 }
