@@ -1,6 +1,7 @@
 package me.futharkr.rpgXpPlugin.managers;
 
 import me.futharkr.rpgXpPlugin.RpgXpPlugin;
+import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,10 +17,16 @@ public class LevelDisplayManager {
     public void setupLevelDisplay(Player player) {
 
         // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
-        boolean isCitizensNPC = player.hasMetadata("NPC");
+//        boolean isCitizensNPC = player.hasMetadata("NPC");
+//
+//        if (isCitizensNPC) {
+//            return;
+//        }
 
-        if (isCitizensNPC) {
-            return;
+        if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
+            if (CitizensAPI.getNPCRegistry().isNPC(player)) {
+                return;
+            }
         }
 
         // Try to get the player's existing scoreboard, or create a new one if they don't have one
@@ -60,10 +67,16 @@ public class LevelDisplayManager {
     }
 
     public void updateLevelDisplay(Player player) {
-        boolean isCitizensNPC = player.hasMetadata("NPC");
+//        boolean isCitizensNPC = player.hasMetadata("NPC");
+//
+//        if (isCitizensNPC) {
+//            return;
+//        }
 
-        if (isCitizensNPC) {
-            return;
+        if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
+            if (CitizensAPI.getNPCRegistry().isNPC(player)) {
+                return;
+            }
         }
 
         updateLevelDisplay(player, player.getLevel());
