@@ -30,8 +30,8 @@ public class LevelDisplayManager {
                 if (objective != null) {
                     objective.unregister();
                 }
-                return;
             }
+            return;
         }
 
         // Try to get the player's existing scoreboard, or create a new one if they don't have one
@@ -97,6 +97,11 @@ public class LevelDisplayManager {
 
         if (objective == null) {
             RpgXpPlugin.getInstance().getLogger().info("[LevelDisplay] objective is null for player " + player.getName());
+            return;
+        }
+
+        if (level < 1) {
+            objective.unregister();
             return;
         }
 
