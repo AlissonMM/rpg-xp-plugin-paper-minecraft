@@ -19,15 +19,12 @@ public class LevelDisplayManager {
         this.mainScoreBoard = mainScoreBoard;
 
 
-        Objective objective = mainScoreBoard.getObjective("playerLevel");
 
-        if (objective == null) {
-            objective = mainScoreBoard.registerNewObjective("playerLevel", Criteria.DUMMY, ChatColor.WHITE + "lvl");
-            objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
-        }
     }
 
     public void setupPlayerLevelDisplay(Player player) {
+
+
 
 
         // First, check if level display is enabled in the config
@@ -48,7 +45,15 @@ public class LevelDisplayManager {
             return;
         }
 
+
         player.setScoreboard(mainScoreBoard);
+
+        Objective objective = mainScoreBoard.getObjective("playerLevel");
+
+        if (objective == null) {
+            objective = mainScoreBoard.registerNewObjective("playerLevel", Criteria.DUMMY, ChatColor.WHITE + "lvl");
+            objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        }
 
         updateLevelDisplay(player);
 
@@ -133,11 +138,18 @@ public class LevelDisplayManager {
             try {
                 Scoreboard scoreboard = player.getScoreboard();
 
-                if (scoreboard == null) {
-                    getLogger().info("[RpgXpPlugin] scoreboard is null for player " + player.getName());
+                if (scoreboard != mainScoreBoard) {
+                    getLogger().info("[RpgXpPlugin] scoreboard is different from mainsScoreboard for player " + player.getName());
                     return true;
                 }
-                player.setScoreboard(null);
+
+                Scoreboard emptyScoreboard = scoreboardManager.getNewScoreboard();
+                emptyScoreboard.getObjectives().clear();
+
+                player.setScoreboard(emptyScoreboard);
+
+                emptyScoreboard.getObjectives().clear();
+
                 getLogger().info("[RpgXpPlugin] Main Scoreboard has been removed for Player " + player.getName());
                 return true;
             }
