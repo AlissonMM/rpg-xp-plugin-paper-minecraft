@@ -29,10 +29,9 @@ public class LevelDisplayManager {
             return;
         }
 
-        // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
-        boolean isCitizensNPC = player.hasMetadata("NPC");
 
-        if (isCitizensNPC) {
+
+        if (isCitizensNPC(player)) {
             return;
         }
 
@@ -41,16 +40,11 @@ public class LevelDisplayManager {
             return;
         }
 
-        //
-
-
-        // Try to get the player's existing scoreboard, ensure player is not using the main scoreboard
-        // and create a new one if they don't have one
-
+        // Try to get the player's existing scoreboard, or create a new one if they don't have one
         Scoreboard scoreboard = player.getScoreboard();
-        if (scoreboard == null || scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
+
+        if (scoreboard == null) {
             scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-            player.setScoreboard(scoreboard);
         }
 
         // Try to get the existing objective, or create it if it doesn't exist
@@ -84,9 +78,9 @@ public class LevelDisplayManager {
     }
 
     public void updateLevelDisplay(Player player) {
-        boolean isCitizensNPC = player.hasMetadata("NPC");
 
-        if (isCitizensNPC) {
+
+        if (isCitizensNPC(player)) {
             return;
         }
 
@@ -97,9 +91,9 @@ public class LevelDisplayManager {
     // and only the updateLevelDisplay(Player) should be used
     public void updateLevelDisplay(Player player, int level) {
 
-        boolean isCitizensNPC = player.hasMetadata("NPC");
 
-        if (isCitizensNPC) {
+
+        if (isCitizensNPC(player)) {
             return;
         }
 
@@ -147,9 +141,9 @@ public class LevelDisplayManager {
 
         getLogger().info("[RpgXpPlugin] Checking if level is below one for player " + player.getName() + " with level " + player.getLevel());
 
-         return player.getLevel() < 1 || player.getLevel() == 0;
+        return player.getLevel() < 1 || player.getLevel() == 0;
 
-        }
+    }
 
 
     private boolean removeLevelDisplay(Player player) {
@@ -157,16 +151,16 @@ public class LevelDisplayManager {
             getLogger().info("Removing level display for player " + player.getName());
             Scoreboard scoreboard = player.getScoreboard();
             if (scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
-                getLogger().warning("Player " + player.getName() + " is using the main scoreboard, assigning a new scoreboard.");
-                scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-                player.setScoreboard(scoreboard);
+                getLogger().warning("Trying to remove objective from main scoreboard for " + player.getName());
             }
-            Objective objective = scoreboard.getObjective("playerLevel");
-            if (objective != null) {
-                getLogger().info("Removing objective playerLevel for " + player.getName());
-                objective.unregister();
+
+                Objective objective = scoreboard.getObjective("playerLevel");
+                if (objective != null) {
+                    getLogger().info("Removing objective playerLevel for " + player.getName());
+                    objective.unregister();
+
             } else {
-                getLogger().info("Objective playerLevel does not exist for " + player.getName());
+                getLogger().info("Scoreboard is null for " + player.getName());
             }
             return true;
         } catch (Exception ex) {
@@ -183,5 +177,9 @@ public class LevelDisplayManager {
         }
 
         return false;
+    }
+
+    private boolean isCitizensNPC(Player player) {
+        return player.hasMetadata("NPC") || player.hasMetadata("CITIZENS_NPC");
     }
 }
