@@ -2,15 +2,21 @@ package me.futharkr.rpgXpPlugin.commands;
 
 import me.futharkr.rpgXpPlugin.RpgXpPlugin;
 import me.futharkr.rpgXpPlugin.managers.LevelDisplayManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 import org.jetbrains.annotations.NotNull;
 
 
 public class EnableDisableLevelDisplayCommand extends Command {
 
-    private final LevelDisplayManager levelDisplayManager = new LevelDisplayManager();
+    ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+    Scoreboard mainScoreboard = scoreboardManager.getMainScoreboard();
+
+    private final LevelDisplayManager levelDisplayManager = new LevelDisplayManager(scoreboardManager, mainScoreboard);
 
     public EnableDisableLevelDisplayCommand() {
         super("rpgxp-enabledisable");
