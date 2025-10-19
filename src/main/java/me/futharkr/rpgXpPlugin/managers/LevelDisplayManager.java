@@ -37,7 +37,7 @@ public class LevelDisplayManager {
         }
 
         // If the player's level is less than 1, remove the objective and return
-        if (checkIfLevelIsBelowOne(player)) {
+        if (checkAndRemoveLevelDisplayIfLevelBelowOne(player)) {
             return;
         }
 
@@ -108,7 +108,7 @@ public class LevelDisplayManager {
         }
 
         // If the player's level is less than 1, remove the objective and return
-        if (checkIfLevelIsBelowOne(player)) {
+        if (checkAndRemoveLevelDisplayIfLevelBelowOne(player)) {
             return;
         }
 
@@ -139,12 +139,15 @@ public class LevelDisplayManager {
     }
 
     private boolean checkIfLevelIsBelowOne(Player player) {
+
+        getLogger().info("[RpgXpPlugin] Checking if level is below one for player " + player.getName() + " with level " + player.getLevel());
+
          return player.getLevel() < 1 | player.getLevel() == 0;
 
         }
 
 
-    private boolean removeLevelDisplay(Player  player) {
+    private boolean removeLevelDisplay(Player player) {
 
         try {
             getLogger().info("Removing level display for player " + player.getName());
@@ -168,6 +171,8 @@ public class LevelDisplayManager {
 
     private boolean checkAndRemoveLevelDisplayIfLevelBelowOne(Player player) {
         if (checkIfLevelIsBelowOne(player)) {
+
+            getLogger().info("[RpgXpPlugin] Player " + player.getName() + " level is below one, its level is " + player.getLevel() +  " removing level display.");
             return removeLevelDisplay(player);
         }
 
