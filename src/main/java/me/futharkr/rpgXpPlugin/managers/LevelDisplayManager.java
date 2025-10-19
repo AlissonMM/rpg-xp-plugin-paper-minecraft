@@ -17,6 +17,13 @@ public class LevelDisplayManager {
 
         // First, check if level display is enabled in the config
         if (!isLevelDisplayEnabled()) {
+            Scoreboard scoreboard = player.getScoreboard();
+            if (scoreboard != null) {
+                Objective objective = scoreboard.getObjective("playerLevel");
+                if (objective != null) {
+                    objective.unregister();
+                }
+            }
             return;
         }
 
@@ -130,6 +137,7 @@ public class LevelDisplayManager {
     }
 
     public void enableDisableLevelDisplayForAllOnlinePlayers() {
+        getLogger().info("Enabling/disabling level display for all online players");
         for (Player player : Bukkit.getOnlinePlayers()) {
             setupLevelDisplay(player);
         }
