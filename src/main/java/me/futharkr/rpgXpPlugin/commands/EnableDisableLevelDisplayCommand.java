@@ -38,6 +38,9 @@ public class EnableDisableLevelDisplayCommand extends Command {
 
             FileConfiguration config = RpgXpPlugin.getInstance().getConfig();
             config.set("enabled", true);
+            RpgXpPlugin.getInstance().saveConfig();
+
+            levelDisplayManager.enableDisableLevelDisplayForAllOnlinePlayers();
 
             return true;
 
@@ -49,6 +52,9 @@ public class EnableDisableLevelDisplayCommand extends Command {
 
             FileConfiguration config = RpgXpPlugin.getInstance().getConfig();
             config.set("enabled", false);
+            RpgXpPlugin.getInstance().saveConfig();
+
+            levelDisplayManager.enableDisableLevelDisplayForAllOnlinePlayers();
 
             return true;
 

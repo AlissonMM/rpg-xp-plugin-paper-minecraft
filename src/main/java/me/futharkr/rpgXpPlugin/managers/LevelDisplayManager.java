@@ -129,5 +129,11 @@ public class LevelDisplayManager {
         return config.getBoolean("enabled", true);
     }
 
+    public void enableDisableLevelDisplayForAllOnlinePlayers() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            setupLevelDisplay(player);
+        }
+    }
+
 
 }
