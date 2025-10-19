@@ -142,7 +142,7 @@ public class LevelDisplayManager {
 
         getLogger().info("[RpgXpPlugin] Checking if level is below one for player " + player.getName() + " with level " + player.getLevel());
 
-         return player.getLevel() < 1 | player.getLevel() == 0;
+         return player.getLevel() < 1 || player.getLevel() == 0;
 
         }
 
