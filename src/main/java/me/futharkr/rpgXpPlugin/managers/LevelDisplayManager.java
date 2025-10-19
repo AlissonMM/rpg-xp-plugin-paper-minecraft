@@ -37,14 +37,7 @@ public class LevelDisplayManager {
         }
 
         // If the player's level is less than 1, remove the objective and return
-        if (player.getLevel() < 1) {
-            Scoreboard scoreboard = player.getScoreboard();
-            if (scoreboard != null) {
-                Objective objective = scoreboard.getObjective("playerLevel");
-                if (objective != null) {
-                    objective.unregister();
-                }
-            }
+        if (checkIfLevelIsBelowOne(player)) {
             return;
         }
 
@@ -114,8 +107,8 @@ public class LevelDisplayManager {
             return;
         }
 
-        if (level < 1) {
-            objective.unregister();
+        // If the player's level is less than 1, remove the objective and return
+        if (checkIfLevelIsBelowOne(player)) {
             return;
         }
 
@@ -145,5 +138,39 @@ public class LevelDisplayManager {
         }
     }
 
+    private boolean checkIfLevelIsBelowOne(Player player) {
+         return player.getLevel() < 1 | player.getLevel() == 0;
 
+        }
+
+
+    private boolean removeLevelDisplay(Player  player) {
+
+        try {
+            getLogger().info("Removing level display for player " + player.getName());
+            Scoreboard scoreboard = player.getScoreboard();
+            if (scoreboard != null) {
+                Objective objective = scoreboard.getObjective("playerLevel");
+                if (objective != null) {
+                    objective.unregister();
+                }
+            }
+            return true;
+
+        }
+
+        catch (Exception ex) {
+            getLogger().severe("Failed to remove level display for player " + player.getName() + ": " + ex.getMessage());
+            return false;
+        }
+
+    }
+
+    private boolean checkAndRemoveLevelDisplayIfLevelBelowOne(Player player) {
+        if (checkIfLevelIsBelowOne(player)) {
+            return removeLevelDisplay(player);
+        }
+
+        return false;
+    }
 }
