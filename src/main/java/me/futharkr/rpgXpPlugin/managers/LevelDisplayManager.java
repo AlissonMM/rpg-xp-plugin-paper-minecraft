@@ -41,11 +41,16 @@ public class LevelDisplayManager {
             return;
         }
 
-        // Try to get the player's existing scoreboard, or create a new one if they don't have one
-        Scoreboard scoreboard = player.getScoreboard();
+        //
 
-        if (scoreboard == null) {
+
+        // Try to get the player's existing scoreboard, ensure player is not using the main scoreboard
+        // and create a new one if they don't have one
+
+        Scoreboard scoreboard = player.getScoreboard();
+        if (scoreboard == null || scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
             scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+            player.setScoreboard(scoreboard);
         }
 
         // Try to get the existing objective, or create it if it doesn't exist
@@ -152,18 +157,16 @@ public class LevelDisplayManager {
             getLogger().info("Removing level display for player " + player.getName());
             Scoreboard scoreboard = player.getScoreboard();
             if (scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
-                getLogger().warning("Trying to remove objective from main scoreboard for " + player.getName());
+                getLogger().warning("Player " + player.getName() + " is using the main scoreboard, assigning a new scoreboard.");
+                scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+                player.setScoreboard(scoreboard);
             }
-            if (scoreboard != null) {
-                Objective objective = scoreboard.getObjective("playerLevel");
-                if (objective != null) {
-                    getLogger().info("Removing objective playerLevel for " + player.getName());
-                    objective.unregister();
-                } else {
-                    getLogger().info("Objective playerLevel does not exist for " + player.getName());
-                }
+            Objective objective = scoreboard.getObjective("playerLevel");
+            if (objective != null) {
+                getLogger().info("Removing objective playerLevel for " + player.getName());
+                objective.unregister();
             } else {
-                getLogger().info("Scoreboard is null for " + player.getName());
+                getLogger().info("Objective playerLevel does not exist for " + player.getName());
             }
             return true;
         } catch (Exception ex) {
