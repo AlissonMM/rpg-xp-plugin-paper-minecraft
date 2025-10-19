@@ -148,25 +148,28 @@ public class LevelDisplayManager {
 
 
     private boolean removeLevelDisplay(Player player) {
-
         try {
             getLogger().info("Removing level display for player " + player.getName());
             Scoreboard scoreboard = player.getScoreboard();
+            if (scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
+                getLogger().warning("Trying to remove objective from main scoreboard for " + player.getName());
+            }
             if (scoreboard != null) {
                 Objective objective = scoreboard.getObjective("playerLevel");
                 if (objective != null) {
+                    getLogger().info("Removing objective playerLevel for " + player.getName());
                     objective.unregister();
+                } else {
+                    getLogger().info("Objective playerLevel does not exist for " + player.getName());
                 }
+            } else {
+                getLogger().info("Scoreboard is null for " + player.getName());
             }
             return true;
-
-        }
-
-        catch (Exception ex) {
+        } catch (Exception ex) {
             getLogger().severe("Failed to remove level display for player " + player.getName() + ": " + ex.getMessage());
             return false;
         }
-
     }
 
     private boolean checkAndRemoveLevelDisplayIfLevelBelowOne(Player player) {
