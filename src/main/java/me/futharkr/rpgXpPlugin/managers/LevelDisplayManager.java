@@ -15,6 +15,11 @@ public class LevelDisplayManager {
 
     public void setupLevelDisplay(Player player) {
 
+        // First, check if level display is enabled in the config
+        if (!isLevelDisplayEnabled()) {
+            return;
+        }
+
         // Check if the player is an NPC (Citizens plugin). If it is, return immediately.
         boolean isCitizensNPC = player.hasMetadata("NPC");
 
@@ -118,16 +123,11 @@ public class LevelDisplayManager {
         }
     }
 
-    public void disableLevelDisplay(Player player) {
-        Scoreboard scoreboard = player.getScoreboard();
 
-        Objective objective = scoreboard.getObjective("playerLevel");
-
-        if (objective != null) {
-            objective.unregister();
-
-
-        }
-
+    private boolean isLevelDisplayEnabled() {
+        FileConfiguration config = RpgXpPlugin.getInstance().getConfig();
+        return config.getBoolean("enabled", true);
     }
+
+
 }

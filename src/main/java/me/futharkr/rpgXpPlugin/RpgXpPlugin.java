@@ -1,7 +1,7 @@
 package me.futharkr.rpgXpPlugin;
 
 import me.futharkr.rpgXpPlugin.commands.ChangeColorDisplayCommand;
-import me.futharkr.rpgXpPlugin.commands.EnableDisableSingleEntityCommand;
+import me.futharkr.rpgXpPlugin.commands.EnableDisableLevelDisplayCommand;
 import me.futharkr.rpgXpPlugin.listeners.XpListener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +24,7 @@ public final class RpgXpPlugin extends JavaPlugin {
 
         // When the command `/rpgxp` is executed in the game it will be handled by the class
         // EnableDisableSingleEntityCommand
-        this.getServer().getCommandMap().register("enabledisable", new EnableDisableSingleEntityCommand());
+        this.getServer().getCommandMap().register("enabledisable", new EnableDisableLevelDisplayCommand());
 
         this.getServer().getCommandMap().register("changecolor", new ChangeColorDisplayCommand());
 
