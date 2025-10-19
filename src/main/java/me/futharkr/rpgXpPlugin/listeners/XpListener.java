@@ -1,25 +1,35 @@
 package me.futharkr.rpgXpPlugin.listeners;
 
-import me.futharkr.rpgXpPlugin.RpgXpPlugin;
 import me.futharkr.rpgXpPlugin.managers.LevelDisplayManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
-import org.bukkit.Bukkit;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 public class XpListener implements Listener {
 
-    private final LevelDisplayManager levelDisplayManager = new LevelDisplayManager();
+    private final LevelDisplayManager levelDisplayManager;
+
+    public XpListener() {
+
+        ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+
+        Scoreboard mainScoreboard = scoreboardManager.getMainScoreboard();
+
+        levelDisplayManager = new LevelDisplayManager(scoreboardManager, mainScoreboard);
+    }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
 
-        levelDisplayManager.setupLevelDisplay(player);
+        levelDisplayManager.setupPlayerLevelDisplay(player);
     }
 
     @EventHandler

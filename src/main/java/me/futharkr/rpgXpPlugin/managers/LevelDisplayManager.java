@@ -5,33 +5,41 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Criteria;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 
 import static org.bukkit.Bukkit.getLogger;
 
 public class LevelDisplayManager {
 
-    public void setupLevelDisplay(Player player) {
+    private final ScoreboardManager scoreboardManager;
+    private final Scoreboard mainScoreBoard;
+
+    public LevelDisplayManager(ScoreboardManager scoreboardManager, Scoreboard mainScoreBoard) {
+        this.scoreboardManager = scoreboardManager;
+        this.mainScoreBoard = mainScoreBoard;
+
+
+        Objective objective = mainScoreBoard.getObjective("playerLevel");
+
+        if (objective == null) {
+            objective = mainScoreBoard.registerNewObjective("playerLevel", Criteria.DUMMY, ChatColor.WHITE + "lvl");
+            objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        }
+    }
+
+    public void setupPlayerLevelDisplay(Player player) {
+
 
         // First, check if level display is enabled in the config
         if (!isLevelDisplayEnabled()) {
-            Scoreboard scoreboard = player.getScoreboard();
-            if (scoreboard != null) {
-                Objective objective = scoreboard.getObjective("playerLevel");
-                if (objective != null) {
-                    objective.unregister();
-                }
-            }
+            removeLevelDisplay(player);
             return;
         }
 
 
 
         if (isCitizensNPC(player)) {
+            removeLevelDisplay(player);
             return;
         }
 
@@ -40,38 +48,7 @@ public class LevelDisplayManager {
             return;
         }
 
-        // Try to get the player's existing scoreboard, or create a new one if they don't have one
-        Scoreboard scoreboard = player.getScoreboard();
-
-        if (scoreboard == null) {
-            scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        }
-
-        // Try to get the existing objective, or create it if it doesn't exist
-        Objective objective = scoreboard.getObjective("playerLevel");
-
-        // Get the color from the config, default to WHITE if not found or invalid
-        FileConfiguration config = RpgXpPlugin.getInstance().getConfig();
-        String colorName = config.getString("scoreboard-color", "WHITE");
-
-        ChatColor color = ChatColor.WHITE;
-        try {
-            color = ChatColor.valueOf(colorName);
-        } catch (Exception ignored) {}
-
-        if (objective == null) {
-            objective = scoreboard.registerNewObjective("playerLevel", Criteria.DUMMY, color + "lvl");
-        } else {
-            objective.setDisplayName(color + "lvl");
-        }
-        // Set the display slot to below the player's name
-        objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
-
-
-        // Assign the scoreboard to the player if they don't already have it
-        if (player.getScoreboard() != scoreboard) {
-            player.setScoreboard(scoreboard);
-        }
+        player.setScoreboard(mainScoreBoard);
 
         updateLevelDisplay(player);
 
@@ -81,6 +58,7 @@ public class LevelDisplayManager {
 
 
         if (isCitizensNPC(player)) {
+            removeLevelDisplay(player);
             return;
         }
 
@@ -94,6 +72,7 @@ public class LevelDisplayManager {
 
 
         if (isCitizensNPC(player)) {
+            removeLevelDisplay(player);
             return;
         }
 
@@ -108,6 +87,7 @@ public class LevelDisplayManager {
 
         // If the player's level is less than 1, remove the objective and return
         if (checkAndRemoveLevelDisplayIfLevelBelowOne(player)) {
+            removeLevelDisplay(player);
             return;
         }
 
@@ -133,7 +113,7 @@ public class LevelDisplayManager {
     public void enableDisableLevelDisplayForAllOnlinePlayers() {
         getLogger().info("Enabling/disabling level display for all online players");
         for (Player player : Bukkit.getOnlinePlayers()) {
-            setupLevelDisplay(player);
+            setupPlayerLevelDisplay(player);
         }
     }
 
@@ -147,26 +127,26 @@ public class LevelDisplayManager {
 
 
     private boolean removeLevelDisplay(Player player) {
-        try {
+
             getLogger().info("Removing level display for player " + player.getName());
-            Scoreboard scoreboard = player.getScoreboard();
-            if (scoreboard == Bukkit.getScoreboardManager().getMainScoreboard()) {
-                getLogger().warning("Trying to remove objective from main scoreboard for " + player.getName());
+
+            try {
+                Scoreboard scoreboard = player.getScoreboard();
+
+                if (scoreboard == null) {
+                    getLogger().info("[RpgXpPlugin] scoreboard is null for player " + player.getName());
+                    return true;
+                }
+                player.setScoreboard(null);
+                getLogger().info("[RpgXpPlugin] Main Scoreboard has been removed for Player " + player.getName());
+                return true;
+            }
+            catch (Exception exception) {
+                getLogger().warning("[RpgXpPlugin] An error has occurred when removing Main Scoreboard from player "
+                        + player.getName() + " Error:" + exception.getMessage());
+                return false;
             }
 
-                Objective objective = scoreboard.getObjective("playerLevel");
-                if (objective != null) {
-                    getLogger().info("Removing objective playerLevel for " + player.getName());
-                    objective.unregister();
-
-            } else {
-                getLogger().info("Scoreboard is null for " + player.getName());
-            }
-            return true;
-        } catch (Exception ex) {
-            getLogger().severe("Failed to remove level display for player " + player.getName() + ": " + ex.getMessage());
-            return false;
-        }
     }
 
     private boolean checkAndRemoveLevelDisplayIfLevelBelowOne(Player player) {
